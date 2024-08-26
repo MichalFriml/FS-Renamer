@@ -14,7 +14,6 @@ fn main() {
         process::exit(1);
     });
 
-    println!("{:?}", config);
     if let Err(e) = run(&config) {
         if !config.silent {println!("Application error: {e}")}
         process::exit(1);
