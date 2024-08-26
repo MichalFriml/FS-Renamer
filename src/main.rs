@@ -1,5 +1,5 @@
 use std::{env, process};
-use file_system_name_refactor::{Config, run};
+use fs_renamer::{Config, run};
 
 
 fn main() {

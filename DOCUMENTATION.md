@@ -1,5 +1,5 @@
 NAME
-    fsnr - file system name refactor
+    fs_renamer - file system renamer
 
 
 DESCRIPTION
@@ -37,7 +37,7 @@ DESCRIPTION
 
 
 EXAMPLES
-    file_system_name_refactor "/to_refactor" -d -r=2 -R=x
+    fsrenamer "/to_refactor" -d -r=2 -R=x
 
 
 WARNING

@@ -1,0 +1,11 @@
+[package]
+name = "fs_renamer"
+version = "0.1.0"
+edition = "2021"
+authors = ["Michal Friml <michal.m.friml@gmail.com>"]
+
+[dependencies]
+
+[[bin]]
+name = "fsrenamer"
+path = "src/main.rs"
