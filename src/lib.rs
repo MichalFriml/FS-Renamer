@@ -1,3 +1,10 @@
+//! Refactors names of files and directories in given destination.
+//! 
+//! Some features require you to set up an instance of the Config, <br />
+//! you can create one either with default values or from given arguments,
+//! to do that check Structs - Config section.
+//! 
+
 use std::fs::{read_dir, DirEntry};
 use std::error::Error;
 use std::path::PathBuf;

@@ -39,7 +39,7 @@ fn config_test_003_directories_only() {
 #[test]
 fn config_test_004_invalid_f_and_d() {
     match Config::build(&vec![String::from("-d"), String::from("-f")]) {
-        Ok(c) => panic!("{:?}", c),
+        Ok(_) => panic!(""),
         Err(_) => {},
     }
 }

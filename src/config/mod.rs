@@ -5,29 +5,56 @@ pub const ILLEGAL: [char; 22] = ['#', '%', '&', '{', '}', '\\', '<', '>', '*', '
 const COPY_IDENTIFIER: &str = "-nrfcopy";
 
 
-#[derive(Debug)]
-pub struct Config {
+/// Holds control values needed for a script's logic
+/// 
+/// Create a new one either with default values ::new() or <br />
+/// with given vec! of String arguments ::build(&args) as a Result<Config, &'static str> 
+/// 
+/// # Examples
+/// ```
+/// let mut def_cnfg: Config = Config::new();
+/// def_cnfg.start = String::from("./dir1");
+/// 
+/// let cstm_cnfg: Result<Config, &'static str> = Config::build(&vec![String::from("./dir1"), String::from("-r=2")]);
+/// ```
+pub struct Config { 
+    /// affect directories
     pub directories: bool,
+    /// affect files
     pub files: bool,
+    /// recurse into directories by that many levels, 255 means unlimited
     pub recursion: u8,
+    /// copy everything instead of renaming in place
     pub copy: bool,
+    /// set a start location
     pub start: String,
+    /// supress error messages
     pub silent: bool,
+    /// enable logging
     pub log: bool,
 
+    /// remove non-ASCII characters
     pub to_ascii: bool,
+    /// affect things starting with '.'
     pub all: bool,
+    /// remove illegal characters
     pub illegal: bool,
+    /// replace removed chars by
     pub replacer: String,
+    /// replace chars with diacritics with their ASCII variant
     pub diacritics: bool,
-
-    pub no_run: bool,
-    pub usage: char,
+    /// what to append to first level cop
     pub copy_identifier: String,
+
+    /// do not run (just output something)
+    pub no_run: bool,
+    /// what to do istead of running (display help, version etc.)
+    pub usage: char,
 } 
 
 
 impl Config {
+    /// Creates a new instance of Config with default values
     pub fn new() -> Config {
         Config{
             directories: true, 
@@ -48,6 +75,10 @@ impl Config {
         }
     }
 
+    /// Creates a new instance of Config from a vector of Strings defined to take command-line arguments. <br />
+    /// Arguments needs to be passed as single flags -s, value can be appended with = as -r=2, <br />
+    /// starting path can be passed without any flag, for example:
+    /// fsrenamer -s "./dir1" 
     pub fn build(args: &Vec<String>) -> Result<Config, &'static str> {
         let mut directories: bool = true;
         let mut files: bool = true;
