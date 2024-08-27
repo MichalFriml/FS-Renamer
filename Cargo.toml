@@ -6,7 +6,6 @@ authors = ["Michal Friml <michal.m.friml@gmail.com>"]
 license = "MIT"
 license-file = "LICENSE"
 readme = "README.md"
-documentation = "DOCUMENTATION.md"
 repository = "https://github.com/MichalFriml/FS-Renamer"
 description = "A tool for refactoring invalid file/dir names"
 
