@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use super::{Config, ILLEGAL};
 
 
+/// Takes &String and returns copied String where diacritics are replaced by their ASCII variants
 pub fn remove_diacritics(original: &String) -> String {
     let mut new: String = String::with_capacity(original.len());
 
@@ -44,6 +45,9 @@ pub fn remove_diacritics(original: &String) -> String {
 }
 
 
+/// Takes &mut String, &[`Config`] and returns copied String. <br />
+/// Depending on the Config, returned String can have diacritics replaced with their ASCII variant, <br />
+/// nonascii and/or illegal characters removed
 pub fn refactor_name(original: &mut String, cnfg: &Config) -> String {
     let nodia: String = if cnfg.diacritics {remove_diacritics(original)} else {original.to_owned()};
 
@@ -59,6 +63,8 @@ pub fn refactor_name(original: &mut String, cnfg: &Config) -> String {
 }
 
 
+/// Takes &mut Pathbuf and &[`Config`], where Pathbuf is the path to target file or dir. <br />
+/// Refactors the file/dir's name in-place using [`refactor_name`]. <br />
 pub fn copy_change_file_name(old_position: &mut PathBuf, new_position: &mut PathBuf, cnfg: &Config, first: bool) 
 -> Result<(), Box<dyn Error>> {
     //old_position is dir1/file.txt -> new_position is dir2/
@@ -118,6 +124,9 @@ pub fn copy_change_file_name(old_position: &mut PathBuf, new_position: &mut Path
 }
 
 
+/// Takes &mut Pathbuf and &[`Config`], where Pathbuf is the path to target file or dir. <br />
+/// Refactors the file/dir's name in-place using [`refactor_name`]. <br />
+/// 
 pub fn change_file_name(position: &mut PathBuf, cnfg: &Config) -> Result<(), Box<dyn Error>> {
     let mut name: String = match position.file_name() {
         Some(os) => { match os.to_owned().into_string() {

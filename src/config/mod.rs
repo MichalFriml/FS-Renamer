@@ -1,5 +1,8 @@
+/// Holds current version of the crate
 pub const VERSION: &str = "0.1.0";
+/// Loads and holds DOCUMENTATION.md from the crate's directory
 pub const HELP: &'static str = include_str!("../../DOCUMENTATION.md");
+/// An array of ASCII chars, which should not be used in directory and file names
 pub const ILLEGAL: [char; 22] = ['#', '%', '&', '{', '}', '\\', '<', '>', '*', '?', '/', ' ',
 '$', '!', '\'', '"', ':', '@', '+', '`', '|', '='];
 const COPY_IDENTIFIER: &str = "-nrfcopy";
@@ -17,6 +20,9 @@ const COPY_IDENTIFIER: &str = "-nrfcopy";
 /// 
 /// let cstm_cnfg: Result<Config, &'static str> = Config::build(&vec![String::from("./dir1"), String::from("-r=2")]);
 /// ```
+
+
+
 pub struct Config { 
     /// affect directories
     pub directories: bool,

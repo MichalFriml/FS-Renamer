@@ -1,6 +1,6 @@
 //! Refactors names of files and directories in given destination.
 //! 
-//! Some features require you to set up an instance of the Config, <br />
+//! Some features require you to set up an instance of the [`Config`], <br />
 //! you can create one either with default values or from given arguments,
 //! to do that check Structs - Config section.
 //! 
@@ -11,8 +11,7 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 mod config;
-use config::{ILLEGAL, HELP};
-pub use config::{Config, VERSION};
+pub use config::{Config, VERSION, HELP, ILLEGAL};
 mod renamer;
 pub use renamer::{change_file_name, copy_change_file_name, refactor_name, remove_diacritics};
 
@@ -66,6 +65,7 @@ fn recurse_through(old_position: &mut PathBuf, new_position: &mut PathBuf, recur
 }
 
 
+/// Refactors file structure from given start with config stored in &[`Config`]
 pub fn run(cnfg: &Config) -> Result<(), Box<dyn Error>> {
     if cnfg.no_run {
         match cnfg.usage {
