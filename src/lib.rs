@@ -65,7 +65,14 @@ fn recurse_through(old_position: &mut PathBuf, new_position: &mut PathBuf, recur
 }
 
 
-/// Refactors file structure from given start with config stored in &[`Config`]
+/// Refactors file structure from given start.
+/// 
+/// Takes config stored in &[`Config`] and returns [`Result<(), Box<dyn Error>>`]
+///
+///  
+/// # Errors
+/// Errors can occure during calls of [`change_file_name`] and [`copy_change_file_name`] or during Pathbuff creation. <br />
+/// Error message should give you a hint, try to enable logging.
 pub fn run(cnfg: &Config) -> Result<(), Box<dyn Error>> {
     if cnfg.no_run {
         match cnfg.usage {

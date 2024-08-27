@@ -81,10 +81,19 @@ impl Config {
         }
     }
 
-    /// Creates a new instance of Config from a vector of Strings defined to take command-line arguments. <br />
+    /// Creates a new instance of Config from a vector of Strings defined to take command-line arguments.
+    /// 
     /// Arguments needs to be passed as single flags -s, value can be appended with = as -r=2, <br />
     /// starting path can be passed without any flag, for example:
     /// fsrenamer -s "./dir1" 
+    /// 
+    /// # Errors 
+    /// - Error: Cannot use -f and -d simultaneously - cannot use both flags, would have no target
+    /// - Error: Invalid recursion level - the value in -r=u8 is invalid
+    /// - Error: Invalid replacing character - the value in -R=char is invalid
+    /// 
+    /// NOTE that invalid flag may be treated as a start path <br />
+    /// NOTE that simple flags like -f are working even when invalid chars follow, like -fsfg is still -f
     pub fn build(args: &Vec<String>) -> Result<Config, &'static str> {
         let mut directories: bool = true;
         let mut files: bool = true;

@@ -45,6 +45,8 @@ pub fn remove_diacritics(original: &String) -> String {
 }
 
 
+/// Returns refactored copy of String
+/// 
 /// Takes &mut String, &[`Config`] and returns copied String. <br />
 /// Depending on the Config, returned String can have diacritics replaced with their ASCII variant, <br />
 /// nonascii and/or illegal characters removed
@@ -63,8 +65,18 @@ pub fn refactor_name(original: &mut String, cnfg: &Config) -> String {
 }
 
 
-/// Takes &mut Pathbuf and &[`Config`], where Pathbuf is the path to target file or dir. <br />
-/// Refactors the file/dir's name in-place using [`refactor_name`]. <br />
+/// Copies the given file/dir, the copy gets refactored name.
+/// Refactors the file/dir's name in-place using [`refactor_name`].
+/// 
+/// Takes &[`Config`] and two &mut Pathbuf, old_position and new_position.
+/// - old_position is a location of file/dir to be copied
+/// - new_position is a location where to should the file/dir be copied into. <br />
+/// -> if old_position is "dir1/file.txt" and new should be "dir1-copy"/file.txt, new_position must be "dir1-copy"
+/// 
+/// # Errors
+/// - Error: Invalid file path - invalid file/dir path provided
+/// - Error: File would overwrite existing one - new file/dit would have same name as existing one
+/// - Error: _ - an error occured during path manipulation or file access
 pub fn copy_change_file_name(old_position: &mut PathBuf, new_position: &mut PathBuf, cnfg: &Config, first: bool) 
 -> Result<(), Box<dyn Error>> {
     //old_position is dir1/file.txt -> new_position is dir2/
@@ -124,9 +136,13 @@ pub fn copy_change_file_name(old_position: &mut PathBuf, new_position: &mut Path
 }
 
 
-/// Takes &mut Pathbuf and &[`Config`], where Pathbuf is the path to target file or dir. <br />
-/// Refactors the file/dir's name in-place using [`refactor_name`]. <br />
+/// Refactors the file/dir's name in-place using [`refactor_name`].
 /// 
+/// Takes &[`Config`] and &mut Pathbuf, the path is a location of file/dir to be renamed.
+
+/// # Errors
+/// - Error: Invalid file path - invalid file/dir path provided
+/// - Error: _ - an error occured during path manipulation or file access
 pub fn change_file_name(position: &mut PathBuf, cnfg: &Config) -> Result<(), Box<dyn Error>> {
     let mut name: String = match position.file_name() {
         Some(os) => { match os.to_owned().into_string() {
