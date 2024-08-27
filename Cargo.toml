@@ -1,8 +1,13 @@
 [package]
-name = "fs_renamer"
-version = "0.1.0"
+name = "fsrenamer"
+version = "0.2.0"
 edition = "2021"
 authors = ["Michal Friml <michal.m.friml@gmail.com>"]
+license = "MIT"
+license-file = "LICENSE"
+readme = "README.md"
+documentation = "DOCUMENTATION.md"
+repository = "https://github.com/MichalFriml/FS-Renamer"
 
 [dependencies]
 

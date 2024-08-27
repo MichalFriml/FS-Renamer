@@ -1,5 +1,5 @@
 NAME
-    fs_renamer - file system renamer
+    fsrenamer - file system renamer
 
 
 DESCRIPTION

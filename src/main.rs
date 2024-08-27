@@ -1,5 +1,5 @@
 use std::{env, process};
-use fs_renamer::{Config, run};
+use fsrenamer::{Config, run};
 
 
 fn main() {

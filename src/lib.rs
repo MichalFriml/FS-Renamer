@@ -4,6 +4,7 @@
 //! you can create one either with default values or from given arguments,
 //! to do that check Structs - Config section.
 //! 
+//! USE BACKUP BEFORE USING ON IMPORTANT FILES
 
 use std::fs::{read_dir, DirEntry};
 use std::error::Error;

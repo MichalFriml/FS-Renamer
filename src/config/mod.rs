@@ -12,17 +12,13 @@ const COPY_IDENTIFIER: &str = "-nrfcopy";
 /// 
 /// Create a new one either with default values ::new() or <br />
 /// with given vec! of String arguments ::build(&args) as a Result<Config, &'static str> 
-/// 
-/// # Examples
-/// ```
+/// ```text
 /// let mut def_cnfg: Config = Config::new();
 /// def_cnfg.start = String::from("./dir1");
 /// 
 /// let cstm_cnfg: Result<Config, &'static str> = Config::build(&vec![String::from("./dir1"), String::from("-r=2")]);
 /// ```
-
-
-
+/// 
 pub struct Config { 
     /// affect directories
     pub directories: bool,
@@ -93,7 +89,6 @@ impl Config {
     /// - Error: Invalid replacing character - the value in -R=char is invalid
     /// 
     /// NOTE that invalid flag may be treated as a start path <br />
-    /// NOTE that simple flags like -f are working even when invalid chars follow, like -fsfg is still -f
     pub fn build(args: &Vec<String>) -> Result<Config, &'static str> {
         let mut directories: bool = true;
         let mut files: bool = true;
@@ -114,25 +109,25 @@ impl Config {
         let copy_identifier: String = String::from(COPY_IDENTIFIER);
 
         for arg in args {
-            if arg.starts_with("--help") {
+            if arg.eq("--help") {
                 no_run = true; 
                 usage = 'h';
                 return Ok(Config{directories, files, recursion, copy, start, silent, log, to_ascii, all, illegal, no_run, usage, replacer, diacritics, copy_identifier});
-            } else if arg.starts_with("--version") {
+            } else if arg.eq("--version") {
                 no_run = true; 
                 usage = 'v';
                 return Ok(Config{directories, files, recursion, copy, start, silent, log, to_ascii, all, illegal, no_run, usage, replacer, diacritics, copy_identifier});
             }
 
-            else if arg.starts_with("-d") {files = false;}
-            else if arg.starts_with("-f") {directories = false;}
-            else if arg.starts_with("-c") {copy = true;}
-            else if arg.starts_with("-s") {silent = true;}
-            else if arg.starts_with("-l") {log = true;}
-            else if arg.starts_with("-a") {all = true;}
-            else if arg.starts_with("-A") {to_ascii = false;}
-            else if arg.starts_with("-I") {illegal = false;}
-            else if arg.starts_with("-D") {diacritics = false;}
+            else if arg.eq("-d") {files = false;}
+            else if arg.eq("-f") {directories = false;}
+            else if arg.eq("-c") {copy = true;}
+            else if arg.eq("-s") {silent = true;}
+            else if arg.eq("-l") {log = true;}
+            else if arg.eq("-a") {all = true;}
+            else if arg.eq("-A") {to_ascii = false;}
+            else if arg.eq("-I") {illegal = false;}
+            else if arg.eq("-D") {diacritics = false;}
             else if arg.starts_with("-r") {
                 let a: &str = &arg[3..];
                 match a.parse::<u8>() {
