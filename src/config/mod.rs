@@ -1,7 +1,7 @@
-use std::{char, f32::consts::E};
+use std::char;
 
 /// Holds current version of the crate
-pub const VERSION: &str = "0.1.0";
+pub const VERSION: &str = "0.2.1";
 /// Loads and holds DOCUMENTATION.md from the crate's directory
 pub const HELP: &'static str = include_str!("../../DOCUMENTATION.md");
 /// An array of ASCII chars, which should not be used in directory and file names
@@ -81,14 +81,17 @@ impl Config {
 
     /// Creates a new instance of Config from a vector of Strings defined to take command-line arguments.
     /// 
-    /// Arguments needs to be passed as single flags -s, value can be appended with = as -r=2, <br />
-    /// starting path can be passed without any flag, for example:
-    /// fsrenamer -s "./dir1" 
+    /// Arguments needs to be passed as single flags or compound flags, <br />
+    /// but new flag cannot be appended after one with value -s, value can be appended with = as -r=2, <br />
+    /// starting path can be passed without any flag, for example: <br />
+    /// fsrenamer -sr=2 "./dir1" 
+    ///     -> silent=true, recursion=2, start="./dir"
     /// 
     /// # Errors 
     /// - Error: Cannot use -f and -d simultaneously - cannot use both flags, would have no target
     /// - Error: Invalid recursion level - the value in -r=u8 is invalid
     /// - Error: Invalid replacing character - the value in -R=char is invalid
+    /// - Error: Invalid flag, check documentation - unrecognised flag used
     /// 
     /// NOTE that invalid flag may be treated as a start path <br />
     pub fn build(args: &Vec<String>) -> Result<Config, &'static str> {

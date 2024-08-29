@@ -35,6 +35,8 @@ DESCRIPTION
     --version
         output version information and exit
 
+    Flags can be joined together, but new one cannot be appended after one with value, "-r=2R=c" is not possible.
+
 
 EXAMPLES
     fsrenamer "/to_refactor" -s -dr=2 -R=x
