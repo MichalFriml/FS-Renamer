@@ -155,7 +155,7 @@ impl Config {
                             }
                             break;
                         },
-                        e => {println!("{}", e); return Err("Invalid flag, check documentation")},
+                        _ => return Err("Invalid flag, check documentation"),
                     }
                 }
             } else {

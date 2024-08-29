@@ -268,17 +268,13 @@ fn t009_shouldnt_overwrite() {
     match create_dir_all(Path::new(work_dir)) {Ok(_) => {}, Err(e) => panic!("{}", e)};
 
     let dir1_str_org: &str = &{let mut s = work_dir.to_owned(); s.push_str("/d仿i+rб仿1"); s};
-    let dir1_str_new: &str = &{let mut s = work_dir.to_owned(); s.push_str("/dir1"); s};
     match create_dir(&dir1_str_org) {Ok(_) => {}, Err(_) => panic!()};
     let dir2_str_org: &str = &{let mut s = work_dir.to_owned(); s.push_str("/dir1"); s};
-    let dir2_str_new: &str = &{let mut s = work_dir.to_owned(); s.push_str("/dir1"); s};
     match create_dir(&dir2_str_org) {Ok(_) => {}, Err(_) => panic!()};
 
     let file1_str_org: &str = &{let mut s = dir1_str_org.to_owned(); s.push_str("/f仿i+le1б.t仿xt"); s};
-    let file1_str_new: &str = &{let mut s = dir1_str_new.to_owned(); s.push_str("/file1.txt"); s};
     match File::create(&file1_str_org) {Ok(_) => {}, Err(e) => panic!("{}", e)};
     let file2_str_org: &str = &{let mut s = dir1_str_org.to_owned(); s.push_str("/file1.txt"); s};
-    let file2_str_new: &str = &{let mut s = dir1_str_new.to_owned(); s.push_str("/file1.txt"); s};
     match File::create(&file2_str_org) {Ok(_) => {}, Err(e) => panic!("{}", e)};
 
     let cnfg: Config = match Config::build(&vec![String::from(dir1_str_org), String::from("-r=3")
@@ -462,17 +458,13 @@ fn t015_copy_shouldnt_overwrite() {
     match create_dir_all(Path::new(work_dir)) {Ok(_) => {}, Err(e) => panic!("{}", e)};
 
     let dir1_str_org: &str = &{let mut s = work_dir.to_owned(); s.push_str("/d仿i+rб仿1"); s};
-    let dir1_str_new: &str = &{let mut s = work_dir.to_owned(); s.push_str("/dir1-nrfcopy"); s};
     match create_dir(&dir1_str_org) {Ok(_) => {}, Err(_) => panic!()};
     let dir2_str_org: &str = &{let mut s = work_dir.to_owned(); s.push_str("/dir1"); s};
-    let dir2_str_new: &str = &{let mut s = work_dir.to_owned(); s.push_str("/dir1"); s};
     match create_dir(&dir2_str_org) {Ok(_) => {}, Err(_) => panic!()};
 
     let file1_str_org: &str = &{let mut s = dir1_str_org.to_owned(); s.push_str("/f仿i+le1б.t仿xt"); s};
-    let file1_str_new: &str = &{let mut s = dir1_str_new.to_owned(); s.push_str("/file1.txt"); s};
     match File::create(&file1_str_org) {Ok(_) => {}, Err(e) => panic!("{}", e)};
     let file2_str_org: &str = &{let mut s = dir1_str_org.to_owned(); s.push_str("/file1.txt"); s};
-    let file2_str_new: &str = &{let mut s = dir1_str_new.to_owned(); s.push_str("/file1.txt"); s};
     match File::create(&file2_str_org) {Ok(_) => {}, Err(e) => panic!("{}", e)};
 
     let cnfg: Config = match Config::build(&vec![String::from(dir1_str_org), String::from("-r=3")
