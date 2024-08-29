@@ -1,4 +1,4 @@
-use std::char;
+use std::{char, f32::consts::E};
 
 /// Holds current version of the crate
 pub const VERSION: &str = "0.1.0";
@@ -111,54 +111,51 @@ impl Config {
         let copy_identifier: String = String::from(COPY_IDENTIFIER);
 
         for arg in args {
-            if arg.starts_with("-") {
-                if arg.starts_with("--") {
-                    if arg.eq("--help") {
-                        no_run = true; 
-                        usage = 'h';
-                        return Ok(Config{directories, files, recursion, copy, start, silent, log, to_ascii, all, illegal, no_run, usage, replacer, diacritics, copy_identifier});
-                    } else if arg.eq("--version") {
-                        no_run = true; 
-                        usage = 'v';
-                        return Ok(Config{directories, files, recursion, copy, start, silent, log, to_ascii, all, illegal, no_run, usage, replacer, diacritics, copy_identifier});
-                    }
-                } else {
-                    let mut iter = arg.chars();
-                    while let Some(char) = iter.next() {
-                        match char {
-                            'd' => files = false,
-                            'f' => directories = false,
-                            'c' => copy = true,
-                            's' => silent = true,
-                            'l' => log = true,
-                            'a' => all = true,
-                            'A' => to_ascii = false,
-                            'I' => illegal = false,
-                            'D' => diacritics = false,
-                            'r' => {
-                                if let Some(ch) = iter.next() {
-                                    if ch.ne(&'=') {break;}
-                                } else {break;}
-                                let remain: String = iter.collect();
-                                match remain.parse::<u8>() {
+            if arg.starts_with("--") {
+                if arg.eq("--help") {
+                    no_run = true; 
+                    usage = 'h';
+                    return Ok(Config{directories, files, recursion, copy, start, silent, log, to_ascii, all, illegal, no_run, usage, replacer, diacritics, copy_identifier});
+                } else if arg.eq("--version") {
+                    no_run = true; 
+                    usage = 'v';
+                    return Ok(Config{directories, files, recursion, copy, start, silent, log, to_ascii, all, illegal, no_run, usage, replacer, diacritics, copy_identifier});
+                }
+            } else if arg.starts_with("-") {
+                let mut iter = arg.chars();
+                iter.next();
+                while let Some(char) = iter.next() {
+                    match char {
+                        'd' => files = false,
+                        'f' => directories = false,
+                        'c' => copy = true,
+                        's' => silent = true,
+                        'l' => log = true,
+                        'a' => all = true,
+                        'A' => to_ascii = false,
+                        'I' => illegal = false,
+                        'D' => diacritics = false,
+                        'r' | 'R' => {
+                            if let Some(ch) = iter.next() {
+                                if ch.ne(&'=') {break;}
+                            } else {break;}
+                            let remain: String = iter.collect();
+
+                            match char {
+                                'r' => {
+                                    match remain.parse::<u8>() {
                                     Ok(n) => recursion = n,
                                     Err(_) => return Err("Invalid recursion level"),
-                                }
-                                break;
+                                }},
+                                'R' => {
+                                    if !remain.is_ascii() || remain.contains(ILLEGAL) {return Err("Invalid replacing character")};
+                                    replacer = String::from(remain);
+                                },
+                                _ => {}
                             }
-                            'R' => {
-                                if let Some(ch) = iter.next() {
-                                    if ch.ne(&'=') {break;}
-                                } else {break;}
-                                let remain: String = iter.collect();
-                                if !remain.is_ascii() || remain.contains(ILLEGAL) {return Err("Invalid replacing character")};
-                                replacer = String::from(remain);
-                                break;
-                            }
-
-
-                            _ => {},
-                        }
+                            break;
+                        },
+                        e => {println!("{}", e); return Err("Invalid flag, check documentation")},
                     }
                 }
             } else {

@@ -114,13 +114,9 @@ fn config_test_012_no_start() {
 }
 
 #[test]
+#[should_panic]
 fn config_test_013_invalid_flag() {
-    let cnfg: Config = match Config::build(&vec![String::from("-op")]) {
-        Ok(c) => c,
-        Err(e) => panic!("{e}"),
-    };
-    let def: Config = Config::new();
-    assert_eq!(def.start, cnfg.start);
+    Config::build(&vec![String::from("-op")]).unwrap();
 }
 
 #[test]
