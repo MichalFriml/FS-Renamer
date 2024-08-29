@@ -81,11 +81,9 @@ impl Config {
 
     /// Creates a new instance of Config from a vector of Strings defined to take command-line arguments.
     /// 
-    /// Arguments needs to be passed as single flags or compound flags, <br />
-    /// but new flag cannot be appended after one with value -s, value can be appended with = as -r=2, <br />
-    /// starting path can be passed without any flag, for example: <br />
-    /// fsrenamer -sr=2 "./dir1" 
-    ///     -> silent=true, recursion=2, start="./dir"
+    /// Arguments needs to be passed as flags, value can be appended with = as -r=2. <br />
+    /// Single flags can be joined into compound flags, but new flag cannot be appended after one with value: -r=2R=c is not valid. <br />
+    /// Starting path can be passed without any flag, for example: fsrenamer -sr=2 "./dir1" -> silent=true, recursion=2, start="./dir"
     /// 
     /// # Errors 
     /// - Error: Cannot use -f and -d simultaneously - cannot use both flags, would have no target
