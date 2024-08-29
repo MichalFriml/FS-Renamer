@@ -37,7 +37,7 @@ DESCRIPTION
 
 
 EXAMPLES
-    fsrenamer "/to_refactor" -d -r=2 -R=x
+    fsrenamer "/to_refactor" -s -dr=2 -R=x
 
 
 WARNING

@@ -1,5 +1,5 @@
 use fsrenamer::{Config, run};
-use::std::fs::{create_dir, create_dir_all, remove_dir_all, remove_file, File, remove_dir, read_dir};
+use::std::fs::{create_dir, create_dir_all, remove_dir_all, File, read_dir};
 use::std::path::{Path, PathBuf};
 
 

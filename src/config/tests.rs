@@ -113,4 +113,26 @@ fn config_test_012_no_start() {
     assert_eq!(cnfg.start, String::from("."))
 }
 
+#[test]
+fn config_test_013_invalid_flag() {
+    let cnfg: Config = match Config::build(&vec![String::from("-op")]) {
+        Ok(c) => c,
+        Err(e) => panic!("{e}"),
+    };
+    let def: Config = Config::new();
+    assert_eq!(def.start, cnfg.start);
+}
+
+#[test]
+fn config_test_014_combined_simple_flags() {
+    let cnfg: Config = match Config::build(&vec![String::from("-IA")]) {
+        Ok(c) => c,
+        Err(e) => panic!("{e}"),
+    };
+    assert_eq!(cnfg.start, String::from("."));
+    assert_eq!(cnfg.illegal, false);
+    assert_eq!(cnfg.to_ascii, false);
+}
+
+
 
