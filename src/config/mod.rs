@@ -1,5 +1,3 @@
-use std::char;
-
 /// Holds current version of the crate
 pub const VERSION: &str = "0.2.1";
 /// Loads and holds DOCUMENTATION.md from the crate's directory
