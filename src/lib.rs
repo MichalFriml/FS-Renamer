@@ -39,12 +39,16 @@ fn recurse_through(old_position: &mut PathBuf, new_position: &mut PathBuf, recur
                     Ok(e) => e,
                     Err(_) => continue,
                 };
-                if !cnfg.all {
+                if !cnfg.all || cnfg.log {
                     match entry.file_name().to_str() {
-                        Some(name) => if name.starts_with(".") {continue;}, 
+                        Some(name) => {
+                            if cnfg.log {
+                                println!("{: <0$} Entering {}", recursion as usize, name)
+                            }
+                            if !cnfg.all && name.starts_with(".") {continue;}}, 
                         _ => continue};
                 }
-
+                
                 let mut path: PathBuf = entry.path();
 
                 match recurse_through(&mut path, new_position, if recursion < 255 {recursion+1} else {recursion}, cnfg) {
@@ -101,7 +105,7 @@ pub fn run(cnfg: &Config) -> Result<(), Box<dyn Error>> {
         println!("Copy - {}", cnfg.copy);
         println!("---")}
     
-    if &cnfg.start == "." {
+    if cnfg.start == "." {
         for entry in read_dir(old_position)? {
             let entry: DirEntry = match entry {
                 Ok(e) => e,
